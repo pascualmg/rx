@@ -8,12 +8,16 @@ var ejercicios = {
         console.clear();
         const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
 
+        result = 0;
+        for(i = 0;i< source.length;i++){
 
-        for(i = 0,result=0;i< source.length;i++, result+=Number(source[i])?0:Number(source[i]) ){
-            console.log(result);
+            if(Number(source[i])){
+                result += source[i];
+            }
         };
 
 
+        console.log(result);
 
         /* output
         42
