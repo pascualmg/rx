@@ -9,11 +9,10 @@ var ejercicios = {
         const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
 
 
-        for(i = 0,result=0;i< source.length;i++, result+=Number(source[i]) === "NaN"?0:Number(source[i]) ){
-            console.log(Number(source[i]));
+        for(i = 0,result=0;i< source.length;i++, result+=Number(source[i])?0:Number(source[i]) ){
+            console.log(result);
         };
 
-        console.log(result);
 
 
         /* output
