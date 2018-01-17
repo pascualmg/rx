@@ -8,14 +8,24 @@ var ejercicios = {
         const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
         var result = 0;
 
-        for(let i = 0;i< source.length;result += Number(source[i])?Number(source[i]):0,i++ ){ };
+        for (let i = 0; i < source.length; result += Number(source[i]) ? Number(source[i]) : 0, i++) {
+        }
+        ;
 
         console.log(result);
-        /* output
-        42
-        */
+        /* output 42 */
     },
     ejer02: function ejer02() {
+        // Crea una variable "result" que contenga la suma
+        // de todos los números en "source". Usa las funciones puras
+        // para arrays como map, filter, reduce o reduceRight.
+        console.clear();
+        const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
 
+        console.log(result);
+
+        /* output
+        33
+        */
     }
 };
