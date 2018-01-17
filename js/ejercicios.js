@@ -23,8 +23,9 @@ var ejercicios = {
         const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
 
         var result = source
-            .filter(function predicateonlyNumbers(item){return Number(item);})
-            .reduce(function combinerSummation(acc, curr){return acc + curr;},0)
+            .filter(function predicate_number(item){return Number(item);})
+            .map(function proyection_number(item){return Number(item);})
+            .reduce(function combiner_summation(acc, curr){return acc + curr;},0)
         ;
         console.log(result);
 
