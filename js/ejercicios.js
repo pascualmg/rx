@@ -9,7 +9,7 @@ var ejercicios = {
         const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
 
         result = 0;
-        for(i = 0;i< source.length;i++){
+        for(let i = 0;i< source.length;i++){
 
             if(Number(source[i])){
                 result = result + Number(source[i]);
