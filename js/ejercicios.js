@@ -11,6 +11,7 @@ var ejercicios = {
             console.log(result);
         };
 
+        console.log(result);
 
 
         /* output
