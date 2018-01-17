@@ -22,6 +22,8 @@ var ejercicios = {
         console.clear();
         const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
 
+        var result = source.filter(function OnlyNumbers(item){Number(item)})
+        ;
         console.log(result);
 
         /* output
