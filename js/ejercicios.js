@@ -18,6 +18,7 @@ var ejercicios = {
 
 
         console.log(result);
+        console.log(i);
 
         /* output
         42
