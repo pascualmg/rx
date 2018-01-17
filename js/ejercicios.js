@@ -12,7 +12,7 @@ var ejercicios = {
         for(i = 0;i< source.length;i++){
 
             if(Number(source[i])){
-                result += source[i];
+                result += Number(source[i]);
             }
         };
 
