@@ -23,11 +23,39 @@ var ejercicios = {
         const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
 
         var result = source
-            .filter(function predicate_number(item){return Number(item);})
-            .map(function proyection_number(item){return Number(item);})
-            .reduce(function combiner_summation(acc, curr){return acc + curr;},0)
+            .filter(function predicate_number(item) {
+                return Number(item);
+            })
+            .map(function proyection_number(item) {
+                return Number(item);
+            })
+            .reduce(function combiner_summation(acc, curr) {
+                return acc + curr;
+            }, 0)
         ;
         console.log(result);
         /* output 42 */
+    },
+    ejer03: function ejer03() {
+        // Create un Observable `result` que emite la suma
+        // de todos los números que emite source. Usando operadores
+        console.clear();
+        const source$ = Rx.Observable
+            .interval(400)
+            .take(9)
+            .map(i => ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'][i]
+    )
+        ;
+
+
+        result$
+            .subscribe(value = > console.log(value)
+    )
+        ;
+
+        /* output
+        33
+        */
     }
+
 };
