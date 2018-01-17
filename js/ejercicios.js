@@ -1,4 +1,3 @@
-"use strict"
 var ejercicios = {
     // Crea una variable "result" que contenga la suma
     // de todos los números en "ource". Ua un for loop tradicional
