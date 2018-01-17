@@ -28,9 +28,6 @@ var ejercicios = {
             .reduce(function combiner_summation(acc, curr){return acc + curr;},0)
         ;
         console.log(result);
-
-        /* output
-        33
-        */
+        /* output 42 */
     }
 };
