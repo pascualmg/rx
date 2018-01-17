@@ -24,7 +24,7 @@ var ejercicios = {
 
         var result = source
             .filter(function predicateonlyNumbers(item){return Number(item);})
-            .reduce(function combinerSummation(acc, curr){return acc + curr;})
+            .reduce(function combinerSummation(acc, curr){return acc + curr;},0)
         ;
         console.log(result);
 
