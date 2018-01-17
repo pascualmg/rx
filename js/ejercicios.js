@@ -11,9 +11,11 @@ var ejercicios = {
         result = 0;
         for(let i = 0;i< source.length;i++){
 
-            if(Number(source[i])){
-                result = result + Number(source[i]);
-            }
+            // if(Number(source[i])){
+            //     result = result + Number(source[i]);
+            // }
+
+            result += Number(source[i])?Number(source[i]):0;
         };
 
 
