@@ -1,5 +1,6 @@
 Ejercicios del Cuenca . 
 // ~~~~~~ 1
+console.clear = () => {};
 
 console.clear();
 const source = ['1', '10', 'foo', '2', '3', '5', 'bar', '8', '13'];
