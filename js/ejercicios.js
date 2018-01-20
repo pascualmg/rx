@@ -1,3 +1,4 @@
+
 let ejercicios;
 ejercicios = {
     ejer01: function ejer01() {
@@ -40,7 +41,6 @@ ejercicios = {
         // Create un Observable `result` que emite la suma
         // de todos los números que emite source. Usando operadores
 
-        console.clear();
         const source$ = Rx.Observable
             .interval(400)
             .take(9)
@@ -48,10 +48,20 @@ ejercicios = {
             )
         ;
 
-        const result$ = RX.Observable.FromObservable(source$);
-        result$.subscribe(
-            next: (item) {console.log(item)};
-        );
+
+        var result = source$
+            .filter(function predicate_number(item) {
+                return Number(item);
+            })
+            .map(function proyection_number(item) {
+                return Number(item);
+            })
+            .reduce(function combiner_summation(acc, curr) {
+                return acc + curr;
+            }, 0)
+        ;
+        return result;
+        // return source$.map(function (item){return Number(item);});
     }
 };
 
