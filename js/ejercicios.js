@@ -61,8 +61,54 @@ ejercicios = {
             }, 0)
         ;
         return result;
-        // return source$.map(function (item){return Number(item);});
-    }
+    },
+    ejer04: function ejer04() {
+        console.clear();
+
+        // const promise = new Promise(resolve => {
+        //     setTimeout(() => {
+        //     console.log('timeout');
+        //     resolve(123);
+        // }, 1000);
+        // console.log('promise started');
+    // });
+
+        // promise
+        //     .then(x => console.log(`resolved: ${x}`));
+
+// -->
+// Crea un observable que se comporte como la promesa
+// anterior, sin usar operadores, es decir, usando
+// Observable.create(subscribe: (subscriber: Observer) => Subscription)
+// <--
+
+        observable$ = Rx.Observable.create(function (observer) {
+            console.log('observable started');
+            const promise = new Promise(resolve => {
+                console.log('promise started');
+                    setTimeout(() => {
+                        console.log('timeout');
+                        resolve(123);
+                    }, 1000);
+                }
+            );
+            promise.then((x)=>observer.next(x));
+        });
+
+
+        observable$
+            .subscribe(x => console.log(`next: ${x}`));
+
+        /* output
+        "promise started"
+        "observable started"
+        "timeout in promise"
+        "resolved: 123"
+        "timeout in observable"
+        "next: 123"
+        */
+
+    },
 };
 
 (function IIFE() {
