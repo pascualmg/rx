@@ -97,6 +97,32 @@ ejercicios = {
         */
 
     },
+    ejer05: function ejer05() {
+        console.clear();
+        const promise = new Promise(resolve => {
+            setTimeout(() => {
+                console.log('timeout in promise');
+                resolve(123);
+            }, 1000);
+            console.log('promise started');
+        });
+
+        promise
+            .then(x => console.log(`resolved: ${x}`));
+
+// -->
+// Crea un observable que se comporte como la promesa
+// que además limpie el timeout al desubscribirse, usando
+// Observable.create
+// <--
+
+        observable$
+            .subscribe(x => console.log('next: ' + x));
+
+// -->
+// Después de 500ms desubscríbete del stream
+// <--
+    },
 };
 
 (function IIFE() {
