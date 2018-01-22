@@ -64,18 +64,6 @@ ejercicios = {
     },
     ejer04: function ejer04() {
         console.clear();
-
-        // const promise = new Promise(resolve => {
-        //     setTimeout(() => {
-        //     console.log('timeout');
-        //     resolve(123);
-        // }, 1000);
-        // console.log('promise started');
-    // });
-
-        // promise
-        //     .then(x => console.log(`resolved: ${x}`));
-
 // -->
 // Crea un observable que se comporte como la promesa
 // anterior, sin usar operadores, es decir, usando
