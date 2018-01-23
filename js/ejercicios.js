@@ -1,7 +1,7 @@
 
 let ejercicios;
 ejercicios = {
-    ejer01: function ejer01() {
+    ejer01: function e01() {
         // Crea una variable "result" que contenga la suma
         // de todos los números en "ource". Ua un for loop tradicional
         // para este ejercicio
@@ -16,7 +16,7 @@ ejercicios = {
         console.log(result);
         /* output 42 */
     },
-    ejer02: function ejer02() {
+    ejer02: function e02() {
         // Crea una variable "result" que contenga la suma
         // de todos los números en "source". Usa las funciones puras
         // para arrays como map, filter, reduce o reduceRight.
@@ -37,7 +37,7 @@ ejercicios = {
         console.log(result);
         /* output 42 */
     },
-    ejer03: function ejer03() {
+    ejer03: function e03() {
         // Create un Observable `result` que emite la suma
         // de todos los números que emite source. Usando operadores
 
@@ -62,11 +62,65 @@ ejercicios = {
         ;
         return result;
         // return source$.map(function (item){return Number(item);});
-    }
+    },
+    ejer04: function e04() {
+        const promise = new Promise(resolve => {
+            setTimeout(() => {
+                console.log('timeout');
+                resolve(123);
+            }, 1000);
+            console.log('promise started');
+        });
+
+        promise
+            .then(x => console.log(`resolved: ${x}`));
+
+// -->
+// Crea un observable que se comporte como la promesa
+// anterior, sin usar operadores, es decir, usando
+// Observable.create(subscribe: (subscriber: Observer) => Subscription)
+// <--
+
+        var observable$ =  Rx.Observable.create(function subscribe(observer) {
+            // observer.next();
+            // observer.error();
+            // observer.complete()
+
+            const subscription = {
+                unsubscribe: function unsubscribe() {
+                }
+            };
+
+            setTimeout(()=>{
+               console.log('timeout in observer');
+               try {
+                  observer.next(123);
+                  observer.complete();
+               } catch (err) {
+                  observer.error(err);
+               }
+               subscription.unsubscribe();
+            }, 1000);
+            console.log('observer started');
+            return subscription;
+        });
+
+        observable$
+            .subscribe(x => console.log(`next: ${x}`));
+
+        /* output
+        "promise started"
+        "observable started"
+        "timeout in promise"
+        "resolved: 123"
+        "timeout in observable"
+        "next: 123"
+        */
+    },
 };
 
 (function IIFE() {
-    ejercicios.ejer03().subscribe((a) => {
+    ejercicios.ejer03().subscribe(function next(a){
         console.log(a)
     });
 }());
