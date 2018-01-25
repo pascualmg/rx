@@ -92,21 +92,26 @@ ejercicios = {
             };
 
             setTimeout(()=>{
-               console.log('timeout in observer');
-               try {
-                  observer.next(123);
-                  observer.complete();
-               } catch (err) {
-                  observer.error(err);
-               }
-               subscription.unsubscribe();
+                console.log('timeout in observer');
+                try {
+                    observer.next(123);
+                    observer.complete();
+                } catch (err) {
+                    observer.error(err);
+                }
+                subscription.unsubscribe();
             }, 1000);
             console.log('observer started');
+
             return subscription;
         });
 
         observable$
-            .subscribe(x => console.log(`next: ${x}`));
+            .subscribe(
+                x => console.log(`next: ${x}`),
+                error => console.log(error),
+                () => console.log('complete')
+            );
 
         /* output
         "promise started"
@@ -117,10 +122,55 @@ ejercicios = {
         "next: 123"
         */
     },
+    ejer05: function e05() {
+        console.clear();
+        const promise = new Promise(resolve => {
+            setTimeout(() => {
+                console.log('timeout in promise');
+                resolve(123);
+            }, 1000);
+            console.log('promise started');
+        });
+
+        promise
+            .then(x => console.log(`resolved: ${x}`));
+
+// -->
+// Crea un observable que se comporte como la promesa
+// que además limpie el timeout al desubscribirse, usando
+// Observable.create
+// <--
+
+        const observable$ = Rx.Observable.create(function subscribe(observable){
+            const subscription = {
+                unsubscribe: function unsubscribe() {
+                    clearTimeout(timer);
+                }
+            };
+            var timer = setTimeout(()=> {
+                try {
+                    observable.next(123);
+                    observable.complete();
+                } catch (err) {
+                    observable(err);
+                }
+            }, 1000);
+
+            setTimeout(subscription.unsubscribe, 500);
+            return subscription;
+        });
+        observable$
+            .subscribe(x => console.log('next: ' + x));
+
+// -->
+// Después de 500ms desubscríbete del stream
+// <--
+    },
 };
 
 (function IIFE() {
     ejercicios.ejer03().subscribe(function next(a){
         console.log(a)
     });
+    ejercicios.ejer04();
 }());
