@@ -162,10 +162,6 @@ var ejercicios = {
 
         console.clear();
 
-
-        const weightSliderElem = document.getElementById('weight-slider');
-        console.log('fuera', weightSliderElem);
-
 // Crea un observable "weight$" que emita
 // el valor (actual y siguientes) de weightSliderElem
 // Del evento cogeremos evt.target.value
@@ -202,6 +198,14 @@ var ejercicios = {
                 console.log('complete')
             },
         );
-    }
+    },
+    ejer08: function ejer08() {},
+    ejer09: function ejer09() {},
+    ejer10: function ejer10() {},
+    ejer11: function ejer11() {},
+    ejer12: function ejer12() {},
+    ejer13: function ejer13() {},
+    ejer14: function ejer14() {},
+    ejer15: function ejer15() {},
 };
 
