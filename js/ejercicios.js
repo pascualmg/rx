@@ -118,8 +118,12 @@ ejercicios = {
         observable$ = new Rx.Observable.create(function subscribe(observer){
             setTimeout(
                 ()=>{
-                    observer.next(42);
-                    observer.complete();
+                    try {
+                        observer.next(42);
+                        observer.complete();
+                    } catch(err){
+                        observer.error(err);
+                    }
                 },
                 1000
             );
@@ -131,10 +135,13 @@ ejercicios = {
             };
             return subscription;
         });
+
         observable$
             .subscribe(x => console.log('siguiente: ' + x));
 
-        //Antes de que tengamos el primer valor nos desuscribimos, por lo que no tendremos salida .
+// -->
+// Después de 500ms desubscríbete del stream
+// <--
         setTimeout(
             (observable$)=>{
                  observable$.unsubscribe();
@@ -143,10 +150,8 @@ ejercicios = {
         );
 
 
-// -->
-// Después de 500ms desubscríbete del stream
-// <--
     },
+
 };
 
 (function IIFE() {
