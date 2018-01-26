@@ -1,4 +1,3 @@
-
 let ejercicios;
 ejercicios = {
     ejer01: function e01() {
@@ -73,14 +72,14 @@ ejercicios = {
         observable$ = Rx.Observable.create(function (observer) {
             console.log('observable started');
             const promise = new Promise(resolve => {
-                console.log('promise started');
+                    console.log('promise started');
                     setTimeout(() => {
                         console.log('timeout');
                         resolve(123);
                     }, 1000);
                 }
             );
-            promise.then((x)=>observer.next(x));
+            promise.then((x) => observer.next(x));
         });
 
 
@@ -115,21 +114,21 @@ ejercicios = {
 // que además limpie el timeout al desubscribirse, usando
 // Observable.create
 // <--
-        observable$ = new Rx.Observable.create(function subscribe(observer){
+        observable$ = new Rx.Observable.create(function subscribe(observer) {
             setTimeout(
-                ()=>{
+                () => {
                     try {
                         observer.next(42);
                         observer.complete();
-                    } catch(err){
+                    } catch (err) {
                         observer.error(err);
                     }
                 },
                 1000
             );
 
-            const subscription  = {
-                unsubscribe: function unsubscribe(){
+            const subscription = {
+                unsubscribe: function unsubscribe() {
                     console.log('me desuscribo gracias!!');//todo:borrame
                 }
             };
@@ -143,9 +142,9 @@ ejercicios = {
 // Después de 500ms desubscríbete del stream
 // <--
         setTimeout(
-            (observable$)=>{
-                 observable$.unsubscribe();
-                },
+            (observable$) => {
+                observable$.unsubscribe();
+            },
             500
         );
 
@@ -165,24 +164,43 @@ ejercicios = {
         console.clear();
 
         const weightSliderElem = document.getElementById('weight-slider');
-        const weightTextElem   = document.getElementById('weight-text');
+        const weightTextElem = document.getElementById('weight-text');
 
-// -->
+
 // Crea un observable "weight$" que emita
 // el valor (actual y siguientes) de weightSliderElem
 // Del evento cogeremos evt.target.value
 // <--
 
+        weight$ = Rx.Observable.create(
+            function (observable) {
+                weightSliderElem.onchange = function sliderOnChangeHandler(ev) {
+                    observable.next(ev.target.value);
+                };
+
+                return { //subscription
+                    unsubscribe: function unsubscribe() {
+                        weightSliderElem.onchange = undefined;
+                    }
+                };
+            }
+        );
 // -->
 // Subscribete a "weight$" para ir actualizando
 // el valor of weightTextElem usando .innerHTML
 // <--
+        weight$.subscribe(
+            (next) => {
+                console.log(next);
+            },
+            (error) => {
+               console.log(error);
+            },
+            function complete(){
+                console.log('complete')
+            },
+        );
     }
-
 };
 
-(function IIFE() {
-    ejercicios.ejer03().subscribe((a) => {
-        console.log(a)
-    });
-}());
+ejercicios.ejer06();
