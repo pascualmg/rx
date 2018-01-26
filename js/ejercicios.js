@@ -242,6 +242,40 @@ var ejercicios = {
 // Observables "weightSlider$" y ["heightSlider$" o "heightEdit$"]
 // bmi: weight / (height * height * 0.01)
 // <--
+        bodyMassIndex$ = Rx.Observable.create(
+            function subscribe(observer) {
+                function calculateBodyMassIndex(height, weight) {
+                    return weight / (height * height * 0.01);
+                }
+
+                weightSlider$
+                    .subscribe(
+                        (nextWeight) => {
+                            const height = Number(weightTextElem.innerHTML);
+                            console.log(height);
+                            observer.next(calculateBodyMassIndex(height, nextWeight));
+                        });
+
+                heightSlider$
+                    .subscribe(
+                        (nextHeight) => {
+                            const weight = Number(heightTextElem.innerHTML);
+                            observer.next(calculateBodyMassIndex(nextHeight, weight))
+                        });
+                heightEdit$
+                    .subscribe(
+                        (nextHeightEdited) => {
+                            const weight = Number(weightTextElem.innerHTML);
+                            observer.next(calculateBodyMassIndex(nextHeightEdited, weight))
+                        });
+
+                const subscription = {
+                    unsubscribe: function () { }
+                };
+
+                return subscription;
+            }
+        );
 
 // Subscriptions
         weightSlider$
@@ -249,7 +283,7 @@ var ejercicios = {
 
         heightSlider$
             .subscribe(x => heightTextElem.innerHTML = x);
-
+        var bmi$ = bodyMassIndex$;
         bmi$
             .subscribe(x => bmiTextElem.innerHTML = x);
 
