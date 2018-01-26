@@ -1,2 +1,3 @@
 
-ejercicios.ejer06();
+ejercicios.ejer07();
+

@@ -1,5 +1,5 @@
 var ejercicios = {
-    ejer01: function e01() {
+    ejer01: function ejer01() {
         // Crea una variable "result" que contenga la suma
         // de todos los números en "ource". Ua un for loop tradicional
         // para este ejercicio
@@ -14,7 +14,7 @@ var ejercicios = {
         console.log(result);
         /* output 42 */
     },
-    ejer02: function e02() {
+    ejer02: function ejer02() {
         // Crea una variable "result" que contenga la suma
         // de todos los números en "source". Usa las funciones puras
         // para arrays como map, filter, reduce o reduceRight.
@@ -35,7 +35,7 @@ var ejercicios = {
         console.log(result);
         /* output 42 */
     },
-    ejer03: function e03() {
+    ejer03: function ejer03() {
         // Create un Observable `result` que emite la suma
         // de todos los números que emite source. Usando operadores
 
@@ -150,8 +150,6 @@ var ejercicios = {
 
     },
     ejer06: function ejer06() {
-        // ~~~~~~ 6
-
         /*
         <div class="row">
           Weight:
@@ -159,14 +157,11 @@ var ejercicios = {
           <input id="weight-slider" type="range" min="40" max="120" step="1" value="70">
         </div>
         */
-
         console.clear();
-
 // Crea un observable "weight$" que emita
 // el valor (actual y siguientes) de weightSliderElem
 // Del evento cogeremos evt.target.value
 // <--
-
         weight$ = Rx.Observable.create(
             function (observable) {
                 const weightSliderElem = document.getElementById('weight-slider');
@@ -192,20 +187,88 @@ var ejercicios = {
                 weightTextElem.innerHTML = next;
             },
             (error) => {
-               console.log(error);
+                console.log(error);
             },
-            function complete(){
+            function complete() {
                 console.log('complete')
             },
         );
     },
-    ejer08: function ejer08() {},
-    ejer09: function ejer09() {},
-    ejer10: function ejer10() {},
-    ejer11: function ejer11() {},
-    ejer12: function ejer12() {},
-    ejer13: function ejer13() {},
-    ejer14: function ejer14() {},
-    ejer15: function ejer15() {},
+    ejer07: function ejer07() {
+        /*
+          <div class="row">
+            Weight: <span id="weight-text"></span>kg
+            <input id="weight-slider" type="range" min="40" max="120" step="1" value="70">
+          </div>
+          <div class="row">
+            Height: <span id="height-text"></span>cm
+            <input id="height-slider" type="range" min="140" max="210" value="170">
+          </div>
+          <div class="row">
+            Height (cm): <input id="height-edit-text" type="text" value="170">
+          </div>
+          <h2>BMI is <span id="bmi-text"></h2>
+        */
+        console.clear();
+
+// Get elements
+        const weightTextElem = document.getElementById('weight-text');
+        const weightSliderElem = document.getElementById('weight-slider');
+
+        const heightTextElem = document.getElementById('height-text');
+        const heightSliderElem = document.getElementById('height-slider');
+
+        const heightEditTextElem = document.getElementById('height-edit-text');
+        const bmiTextElem = document.getElementById('bmi-text');
+
+// Observables
+        const weightSlider$ = Rx.Observable
+            .fromEvent(weightSliderElem, 'input')
+            .map(evt => evt.target.value)
+            .startWith(weightSliderElem.value);
+
+        const heightSlider$ = Rx.Observable
+            .fromEvent(heightSliderElem, 'input')
+            .map(evt => evt.target.value)
+            .startWith(heightSliderElem.value);
+
+        const heightEdit$ = Rx.Observable
+            .fromEvent(heightEditTextElem, 'input')
+            .map(evt => evt.target.value)
+            .startWith(heightEditTextElem.value);
+
+// -->
+// Crea un Observable "bmi" que depende de los
+// Observables "weightSlider$" y ["heightSlider$" o "heightEdit$"]
+// bmi: weight / (height * height * 0.01)
+// <--
+
+// Subscriptions
+        weightSlider$
+            .subscribe(x => weightTextElem.innerHTML = x);
+
+        heightSlider$
+            .subscribe(x => heightTextElem.innerHTML = x);
+
+        bmi$
+            .subscribe(x => bmiTextElem.innerHTML = x);
+
+    },
+    ejer08: function ejer08() {
+    },
+    ejer09: function ejer09() {
+    },
+    ejer10: function ejer10() {
+    },
+    ejer11: function ejer11() {
+    },
+    ejer12: function ejer12() {
+    },
+    ejer13: function ejer13() {
+    },
+    ejer14: function ejer14() {
+    },
+    ejer15: function ejer15() {
+    },
 };
 
