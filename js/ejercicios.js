@@ -1,7 +1,7 @@
 
 let ejercicios;
 ejercicios = {
-    ejer01: function ejer01() {
+    ejer01: function e01() {
         // Crea una variable "result" que contenga la suma
         // de todos los números en "ource". Ua un for loop tradicional
         // para este ejercicio
@@ -16,7 +16,7 @@ ejercicios = {
         console.log(result);
         /* output 42 */
     },
-    ejer02: function ejer02() {
+    ejer02: function e02() {
         // Crea una variable "result" que contenga la suma
         // de todos los números en "source". Usa las funciones puras
         // para arrays como map, filter, reduce o reduceRight.
@@ -37,7 +37,7 @@ ejercicios = {
         console.log(result);
         /* output 42 */
     },
-    ejer03: function ejer03() {
+    ejer03: function e03() {
         // Create un Observable `result` que emite la suma
         // de todos los números que emite source. Usando operadores
 
