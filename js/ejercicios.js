@@ -1,5 +1,4 @@
-let ejercicios;
-ejercicios = {
+var ejercicios = {
     ejer01: function e01() {
         // Crea una variable "result" que contenga la suma
         // de todos los números en "ource". Ua un for loop tradicional
@@ -163,9 +162,9 @@ ejercicios = {
 
         console.clear();
 
-        const weightSliderElem = document.getElementById('weight-slider');
-        const weightTextElem = document.getElementById('weight-text');
 
+        const weightSliderElem = document.getElementById('weight-slider');
+        console.log('fuera', weightSliderElem);
 
 // Crea un observable "weight$" que emita
 // el valor (actual y siguientes) de weightSliderElem
@@ -174,6 +173,9 @@ ejercicios = {
 
         weight$ = Rx.Observable.create(
             function (observable) {
+                debugger;
+                const weightSliderElem = document.getElementById('weight-slider');
+                console.log('dentro', weightSliderElem);
                 weightSliderElem.onchange = function sliderOnChangeHandler(ev) {
                     observable.next(ev.target.value);
                 };
@@ -191,7 +193,8 @@ ejercicios = {
 // <--
         weight$.subscribe(
             (next) => {
-                console.log(next);
+                const weightTextElem = document.getElementById('weight-text');
+                weightTextElem.innerHTML = next;
             },
             (error) => {
                console.log(error);
@@ -203,4 +206,3 @@ ejercicios = {
     }
 };
 
-ejercicios.ejer06();
