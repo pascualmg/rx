@@ -151,6 +151,33 @@ ejercicios = {
 
 
     },
+    ejer06: function ejer06() {
+        // ~~~~~~ 6
+
+        /*
+        <div class="row">
+          Weight:
+          <span id="weight-text"></span>kg
+          <input id="weight-slider" type="range" min="40" max="120" step="1" value="70">
+        </div>
+        */
+
+        console.clear();
+
+        const weightSliderElem = document.getElementById('weight-slider');
+        const weightTextElem   = document.getElementById('weight-text');
+
+// -->
+// Crea un observable "weight$" que emita
+// el valor (actual y siguientes) de weightSliderElem
+// Del evento cogeremos evt.target.value
+// <--
+
+// -->
+// Subscribete a "weight$" para ir actualizando
+// el valor of weightTextElem usando .innerHTML
+// <--
+    }
 
 };
 
