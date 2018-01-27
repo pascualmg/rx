@@ -314,8 +314,10 @@ var ejercicios = {
         const messages$ = Rx.Observable.create(function subscribe(observer) {
             userActions$
                 .zip(renderFailures$.concat(connectionFailures$))
-                .filter( (arr) => { return (arr.length == 2);})
-                .map( x => 'System failed becouse of ' + x[1]  + ' after the user ' + x[0] )
+                .filter((arr) => {
+                    return (arr.length == 2);
+                })
+                .map(x => 'System failed becouse of ' + x[1] + ' after the user ' + x[0])
                 .subscribe(
                     x => observer.next(x),
                     err => observer.error(err)
@@ -343,6 +345,54 @@ var ejercicios = {
         */
     },
     ejer09: function ejer09() {
+
+// publish y refCount
+
+// El método `Publish` crea un nuevo Observable que actúa como proxy
+// del original. Lo hace subscribiendose él mismo al original
+// y pusheando los valores a los subscriber
+
+// Un observable published, es de hecho un ConnectableObservable,
+// que tiene un método extra llamado connect, al que llamamos para
+// empezar a recibir valores.
+
+        const source$ = Rx.Observable.interval(1000);
+
+        const publisher$ = source$.publish();
+
+        publisher$.subscribe(x => console.log(`Subscription 1: ${x}`));
+        publisher$.connect();
+
+        setTimeout(() => {
+            publisher$
+                .subscribe(x => console.log(`Subscription 2: ${x}`));
+        }, 5000);
+
+// RefCount sirve para automatizar el proceso de conectar
+// un Observable conectable. Lo más importante, mantiene
+// la cuenta de los subscriptiores que tiene el observable
+// y no se desconecta de él hasta que el último observer
+// ha terminado
+
+        console.clear();
+
+        const clock$ = Rx.Observable
+            .interval(1000)
+            .take(10)
+            .map(x => x + 1);
+// -->
+// Arregla el código para que ambos subscribers
+// logueen los mismos eventos al mismo tiempo
+// <--
+
+        setTimeout(() => {
+            clock$
+                .subscribe(x => console.log(`b: ${x}`))
+        }, 4500);
+
+        clock$
+            .subscribe(x => console.log(`a: ${x}`));
+
     },
     ejer10: function ejer10() {
     },
