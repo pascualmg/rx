@@ -315,7 +315,7 @@ var ejercicios = {
             userActions$
                 .zip(renderFailures$.concat(connectionFailures$))
                 .filter( (arr) => { return (arr.length == 2);})
-                .map( x => 'System failed becouse of ' + x[1]  + 'after the user ' + x[0] )
+                .map( x => 'System failed becouse of ' + x[1]  + ' after the user ' + x[0] )
                 .subscribe(
                     x => observer.next(x),
                     err => observer.error(err)
