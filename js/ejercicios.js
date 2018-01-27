@@ -268,7 +268,8 @@ var ejercicios = {
                         });
 
                 const subscription = {
-                    unsubscribe: function () { }
+                    unsubscribe: function () {
+                    }
                 };
 
                 return subscription;
@@ -310,8 +311,60 @@ var ejercicios = {
 // "System failed because of ${failure} after the user ${action}"
 // <--
 
+        const messages$ = Rx.Observable.create(function subscribe(observer) {
+
+            // userActions$
+            //     .subscribe(
+            //         nextUserAction => observer.next(nextUserAction),
+            //         (userActionError) => observer.error(
+            //             {
+            //                 typeOfMessageError: 'userActionError',
+            //                 data: userActionError
+            //             }
+            //         )
+            //     );
+            //
+            // renderFailures$.subscribe(
+            //     nextRenderFailure => observer.next(nextRenderFailure),
+            //     (renderFailureError) => observer.error(
+            //         {
+            //             typeOfMessageError: 'renderFailureError',
+            //             data: renderFailureError
+            //         }
+            //     )
+            // );
+            //
+            // connectionFailures$
+            //     .subscribe(
+            //         x => observer.next(x)
+            //     );
+            //
+            userActions$
+                .zip(renderFailures$)
+                // .zip(connectionFailures$)
+                .map(next => {
+                    let message;
+                    message = 'System Failure ' . next[0];
+                    return next;
+                    return 'algo';
+                })
+                .subscribe(
+                    x => observer.next(x),
+                    err => observer.error(err)
+                );
+            const subscription = {
+                unsubscribe: function unsubscribe() {
+                }
+            };
+            return subscription;
+        });
+
+
         messages$
-            .subscribe(x => console.log(x));
+            .subscribe(
+                x => console.log(x),
+                err => observer.error(err)
+            );
 
         /* output
         "System failed because of Render failed: 309 after the user Clicked"
