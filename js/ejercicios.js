@@ -312,42 +312,16 @@ var ejercicios = {
 // <--
 
         const messages$ = Rx.Observable.create(function subscribe(observer) {
+            function isUndefined(wtf) {
+                return typeof(wtf) === 'undefined';
+            };
 
-            // userActions$
-            //     .subscribe(
-            //         nextUserAction => observer.next(nextUserAction),
-            //         (userActionError) => observer.error(
-            //             {
-            //                 typeOfMessageError: 'userActionError',
-            //                 data: userActionError
-            //             }
-            //         )
-            //     );
-            //
-            // renderFailures$.subscribe(
-            //     nextRenderFailure => observer.next(nextRenderFailure),
-            //     (renderFailureError) => observer.error(
-            //         {
-            //             typeOfMessageError: 'renderFailureError',
-            //             data: renderFailureError
-            //         }
-            //     )
-            // );
-            //
-            // connectionFailures$
-            //     .subscribe(
-            //         x => observer.next(x)
-            //     );
-            //
+
+
             userActions$
-                .zip(renderFailures$)
-                // .zip(connectionFailures$)
-                .map(next => {
-                    let message;
-                    message = 'System Failure ' . next[0];
-                    return next;
-                    return 'algo';
-                })
+                .zip(renderFailures$.concat(connectionFailures$))
+                .filter( (arr) => { return (arr.length == 2);})
+                .map( x => 'System failed becouse of ' + x[1]  + 'after the user ' + x[0] )
                 .subscribe(
                     x => observer.next(x),
                     err => observer.error(err)
@@ -363,7 +337,7 @@ var ejercicios = {
         messages$
             .subscribe(
                 x => console.log(x),
-                err => observer.error(err)
+                err => console.error(err)
             );
 
         /* output
