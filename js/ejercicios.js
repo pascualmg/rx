@@ -254,7 +254,6 @@ var ejercicios = {
                             const height = Number(weightTextElem.innerHTML);
                             observer.next(calculateBodyMassIndex(height, nextWeight));
                         });
-
                 heightSlider$
                     .subscribe(
                         (nextHeight) => {
@@ -283,11 +282,44 @@ var ejercicios = {
         heightSlider$
             .subscribe(x => heightTextElem.innerHTML = x);
         var bmi$ = bodyMassIndex$;
+
         bmi$
             .subscribe(x => bmiTextElem.innerHTML = x);
 
     },
     ejer08: function ejer08() {
+        console.clear();
+
+        const connectionFailures$ = Rx.Observable
+            .interval(800)
+            .take(2)
+            .map(i => ['Connection pooped', 'Refresh Epic Fail'][i]);
+
+        const renderFailures$ = Rx.Observable
+            .interval(700)
+            .take(3)
+            .map(i => ['Render failed: 309', 'Render failed: 17', 'Nothing rendered'][i]);
+
+        const userActions$ = Rx.Observable
+            .interval(300)
+            .take(6)
+            .map(i => ['Clicked', 'Scrolled', 'Clicked', 'Typed', 'Zoomed in', 'Scrolled'][i]);
+
+// -->
+// Crea un Observable "messages$" que emita la cadena
+// "System failed because of ${failure} after the user ${action}"
+// <--
+
+        messages$
+            .subscribe(x => console.log(x));
+
+        /* output
+        "System failed because of Render failed: 309 after the user Clicked"
+        "System failed because of Connection pooped after the user Scrolled"
+        "System failed because of Render failed: 17 after the user Clicked"
+        "System failed because of Refresh Epic Fail after the user Typed"
+        "System failed because of Nothing rendered after the user Zoomed in"
+        */
     },
     ejer09: function ejer09() {
     },
