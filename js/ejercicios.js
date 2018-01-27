@@ -356,17 +356,31 @@ var ejercicios = {
 // que tiene un método extra llamado connect, al que llamamos para
 // empezar a recibir valores.
 
-        const source$ = Rx.Observable.interval(1000);
-
+        const source$ = Rx.Observable.interval(500);
         const publisher$ = source$.publish();
 
-        publisher$.subscribe(x => console.log(`Subscription 1: ${x}`));
-        publisher$.connect();
+        function testThePublisher() {
+            let subscription1 = publisher$
+                .subscribe(
+                    x => console.log(`Subscription 1: ${x}`)
+                );
+            publisher$.connect();
 
-        setTimeout(() => {
-            publisher$
-                .subscribe(x => console.log(`Subscription 2: ${x}`));
-        }, 5000);
+            var subscription2;
+
+            setTimeout(function unsubscribeFrom1AndSubscribeTo2() {
+                subscription1.unsubscribe();
+                subscription2 = publisher$
+                    .subscribe(x => console.log(`Subscription 2: ${x}`));
+            }, 5000);
+
+
+            setTimeout(function desuscribirseHandler() {
+                subscription2.unsubscribe();
+                console.log('desuscribiendose de la 2  ahora es cuando empieza el ejercicio... ');//TODO: borrame.
+            }, 10000);
+        }
+        // testThePublisher();
 
 // RefCount sirve para automatizar el proceso de conectar
 // un Observable conectable. Lo más importante, mantiene
@@ -374,26 +388,38 @@ var ejercicios = {
 // y no se desconecta de él hasta que el último observer
 // ha terminado
 
+        // publisher$
+        //     .refCount()
+        //     .subscribe(
+        //         (x)=>{console.log('refcountado', x);}
+        //     );
+
+
+
         console.clear();
 
         const clock$ = Rx.Observable
-            .interval(1000)
+            .interval(3000)
             .take(10)
-            .map(x => x + 1);
+            .map(x => x + 1)
+        ;
+
 // -->
 // Arregla el código para que ambos subscribers
 // logueen los mismos eventos al mismo tiempo
 // <--
 
+        const clockPublisher$ = clock$.publish().refCount();
+
         setTimeout(() => {
-            clock$
+            clockPublisher$
                 .subscribe(x => console.log(`b: ${x}`))
         }, 4500);
 
-        clock$
+        clockPublisher$
             .subscribe(x => console.log(`a: ${x}`));
-
     },
+
     ejer10: function ejer10() {
     },
     ejer11: function ejer11() {
