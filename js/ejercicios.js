@@ -433,12 +433,12 @@ ejercicios = {
             // Debes devolver un observable
             // <--
             return source$
-                .zip(Rx.Observable.interval(1000))
+                .zip(Rx.Observable.interval(interval))
                 .map(x => x[0])
                 ;
         }
 
-        delayEach(clock$, 2000)
+        delayEach(clock$, 1042)
             .subscribe(x => console.log(x));
 
     },
