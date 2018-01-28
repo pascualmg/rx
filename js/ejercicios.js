@@ -409,14 +409,14 @@ var ejercicios = {
 // logueen los mismos eventos al mismo tiempo
 // <--
 
-        const clockPublisher$ = clock$.publish().refCount();
+        const refCountedPublishedClock$ = clock$.publish().refCount();
 
         setTimeout(() => {
-            clockPublisher$
+            refCountedPublishedClock$
                 .subscribe(x => console.log(`b: ${x}`))
         }, 4500);
 
-        clockPublisher$
+        refCountedPublishedClock$
             .subscribe(x => console.log(`a: ${x}`));
     },
 
