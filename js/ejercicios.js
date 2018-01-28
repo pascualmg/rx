@@ -442,5 +442,17 @@ ejercicios = {
             .subscribe(x => console.log(x));
 
     },
+    execAll: function execAll(){
+        ejercicios.ejer01();
+        ejercicios.ejer02();
+        ejercicios.ejer03();
+        ejercicios.ejer04();
+        ejercicios.ejer05();
+        ejercicios.ejer06();
+        ejercicios.ejer07();
+        ejercicios.ejer08();
+        ejercicios.ejer09();
+        ejercicios.ejer10();
+    }
 };
 
