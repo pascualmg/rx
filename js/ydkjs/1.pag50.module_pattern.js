@@ -1,8 +1,10 @@
 "use strict";
 
-function User(){
+function User(user , pass) {
     let publicAPI;
-    let username, password;
+
+    let username = user;
+    let password = pass;
 
     function doLogin(user, pass) {
         username = user;
@@ -11,24 +13,58 @@ function User(){
     }
 
     function showData() {
-       console.log('me llamo ', username);
-       console.log('tengo el pass ', password);
+       console.log('me llamo ', userName());
+       console.log('tengo el pass ', passWord());
+    }
+
+    function userName() {
+        return username;
+    }
+    //fluent setter.
+    function setUserName(user) {
+        username = user;
+        return publicAPI;
+    }
+
+    function passWord() {
+        return password;
+    }
+    //fluent setter.
+    function setPassword(pass) {
+       password = pass;
+       return publicAPI;
     }
 
     publicAPI = {
         login: doLogin,
+        userName: userName,
+        passWord: passWord,
+        setPassword: setPassword,
+        setUserName: setUserName,
         showData: showData,
     };
 
     return publicAPI; 
 }
 
-//create a user module instance.
-debugger;
-var passh = User();
+//create a user module instance different ways ...
 
-passh.login('passh', 'cebollo100');
+//constructor al crear...
+ let passh = User('passh', 'cebollo100');
+ passh.showData();
 
-passh.showData();
+//constructor desde func...
+ passh.login('passh', 'cebollo100');
+ passh.showData();
+
+ //fluentSetters Constructor.
+let otherUser = User()
+    .setUserName('passh')
+    .setPassword('pass')
+;
+otherUser.showData();
+
+passh.setUserName('Pascual Munioz');
+console.log('me cambie el nombre', passh.userName());//TODO: borrame.
 
 
