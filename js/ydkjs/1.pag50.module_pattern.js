@@ -27,7 +27,7 @@ function User(){
 debugger;
 var passh = User();
 
-passh.login('passh', 'capullo100');
+passh.login('passh', 'cebollo100');
 
 passh.showData();
 
