@@ -1,4 +1,5 @@
-var ejercicios = {
+var ejercicios;
+ejercicios = {
     ejer01: function ejer01() {
         // Crea una variable "result" que contenga la suma
         // de todos los números en "ource". Ua un for loop tradicional
@@ -380,6 +381,7 @@ var ejercicios = {
                 console.log('desuscribiendose de la 2  ahora es cuando empieza el ejercicio... ');//TODO: borrame.
             }, 10000);
         }
+
         // testThePublisher();
 
 // RefCount sirve para automatizar el proceso de conectar
@@ -393,7 +395,6 @@ var ejercicios = {
         //     .subscribe(
         //         (x)=>{console.log('refcountado', x);}
         //     );
-
 
 
         console.clear();
@@ -419,18 +420,27 @@ var ejercicios = {
         refCountedPublishedClock$
             .subscribe(x => console.log(`a: ${x}`));
     },
-
     ejer10: function ejer10() {
-    },
-    ejer11: function ejer11() {
-    },
-    ejer12: function ejer12() {
-    },
-    ejer13: function ejer13() {
-    },
-    ejer14: function ejer14() {
-    },
-    ejer15: function ejer15() {
+        console.clear();
+        var clock$ = Rx.Observable
+            .interval(100)
+            .take(10);
+
+        function delayEach(source$, interval) {
+            // -->
+            // Debes transformar cada elemento en
+            // un observable con delay
+            // Debes devolver un observable
+            // <--
+            return source$
+                .zip(Rx.Observable.interval(1000))
+                .map(x => x[0])
+                ;
+        }
+
+        delayEach(clock$, 2000)
+            .subscribe(x => console.log(x));
+
     },
 };
 

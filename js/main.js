@@ -1,3 +1,3 @@
 
-ejercicios.ejer09();
+ejercicios.ejer10();
 
