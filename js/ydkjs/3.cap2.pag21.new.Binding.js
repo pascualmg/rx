@@ -19,16 +19,16 @@
  * Intento de traducción del 3 libro, capitulo 2 ,  pag 21 ydkjs de kyle Sympson , explicando
  * la cuarta regla del bindeo del this.
  *
- * La cuarta regla del 'this binding'requiere tener que repensar
- * uno algo con lo que todo la mayoría no se entera en lo
- * relativo a funciones y a objetos en Javascript.
+ * La cuarta regla del 'bindeo del this' requiere tener que repensar
+ * uno algo con lo que la mayoría no se entera en lo relativo a funciones
+ * y a objetos en Javascript.
  *
  * En el modelo de clases al que estás acostumbrado como en
- * java , php y demás los contructores son métodos 'attachados'a
- * a las clases . Y cuando instancias la clase con el operador new
+ * los lejguajes tradicionales,  los contructores son métodos 'ligadas' (attached) a
+ * a las clases . Y cuando se instancia la clase con el operador new
  * se llama directamente a ese método.
  *
- * suele ser parecido a esto:
+ * que suele ser parecido a esto:
  * algo = new MiClase();
  *
  * Javascript tiene el operador new , y el patrón de código que usa
@@ -37,7 +37,7 @@
  *
  * Muchos desarrolladores , asumen que lo que está haciendo ese patron
  * en JS es lo mismo. Sea como sea , no hay NINGUNA CONEXION con el lenguaje
- * orientado a clases con el new de JS.
+ * orientado a clases con el 'new' de JS.
  *
  * Primero redefinamos lo que es un constructor en Js...
  * En js los contructores son sólo funciones que se pasan cuando se llama con el
@@ -71,33 +71,24 @@ console.log('typeof miNumero', typeof miNumero);//Object
  * cosas pasan automáticamente:
  *
  *  1. Se crea un objeto totalmente nuevo.
- *  2. El nuevo objeto es [[Prototype]]-linkeado. //De esto ni zorra aun ya que es del cap 3.
+ *  2. El nuevo objeto es [[Prototype]]-linkeado. //De esto ni zorra aun ya que es del cap 5.
  *  3. El nuevo objeto que se ha creado , es setteado en el bindeo del 'this' para esa llamada de función.
- *  4. Hasta que la función ,
+ *  4. A no ser que la función retorne su propio objeto alterado , la función invocada con el 'new'
+ *     automáticamente retorna el objeto recién construido.
  *
-
+ *  Ten en cuenta el siguiente código:
  */
-
-
-//uff clases , un pequeño ejemplo ya que habla del class pattern
-// y el new estando aburrido de verlas , algo que no sucede.
-class miClase {
-    constructor() {
-        console.log('soy un constructor ejecutandome');//TODO: borrame.
-        miClase.baz = 2;
-    };
-};
-
-algo = new miClase();
-
-//Aquí el snipet:
-
 function foo(a) {
     this.a = a;
 };
 
 var bar = new foo(2);
 
-console.log('bar', bar);//TODO: borrame.
-console.log('bar.a', bar.a);//TODO: borrame.
+console.log('bar', bar);//2
+
+/**
+ * Llamando a foo(..) con el new delante, hemos construido un nuevo objeto y hemos setteado con digo nuevo objeto
+ * el this de la llamada de foo(..) .  Así el 'new' es la manera final en la que el this se puede bindear.
+ * A esto es lo que llamamos 'New Binding'.
+ */
 
