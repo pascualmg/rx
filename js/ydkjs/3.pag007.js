@@ -1,3 +1,4 @@
+"use strict";
 function foo(num) {
     console.log('foo: ' + num);
     this.count++;
@@ -12,6 +13,8 @@ for (i = 0;i<10;i++) {
        //Aquí usamos la call para asegurarnos de que `this`
        //apunta a la función objego (`foo`) a si misma.
        foo.call(foo, i); //que hijopuuto.
+       console.log('foo.a', foo.count);//TODO: borrame.
+       
    }
 }
 
