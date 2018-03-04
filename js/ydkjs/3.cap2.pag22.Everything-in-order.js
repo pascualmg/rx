@@ -90,7 +90,18 @@ console.log('bar.a', bar.a);//4
  * foo.call(obj) no está permitido para testear el 'new binding' con el 'explicit binding' Pero aún así ,
  * podemos usar el 'hard binding' para testear la precedencia de ambas reglas.
  *
+ * Antes de que podamos meternos a ver esto con código, tienes que pensar de nuevo como funciona
+ * el 'hard binding' físicamente ,que al final es esa Function.prototype.bind(...) que crea
+ * una nueva función que wrappea a la función que tiene el this harcodeado, ignorando por completo
+ * su propio 'this binding' ,sea cual sea , usando el que le pasamos manualmente.
+ *
+ * Por ese mismo razonamiento , debería de parecer obvio asumir que ese 'hard binding'
+ * (el cual es una forma de 'explicit binding' ) tiene más precedencia que el 'new binding'
+ * y por lo tanto no puede ser sobreescrito con el new.
+ *
+ * Vamos a verlo:
  */
+
 
 
 
