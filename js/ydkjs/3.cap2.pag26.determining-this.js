@@ -31,11 +31,25 @@ function foo(){};
 var bar = new foo();
 
 
-//2.Se ha llamado a la función con un call o apply ('explicit-binding'), incluso oculto
+// 2. Se ha llamado a la función con un call o apply ('explicit-binding'), incluso oculto
 //  desde una bind ('hard-binding')? Si es así entonces el 'this' es ese objeto indicado
 //  explíticamente.
 
 var bar = foo.call(obj);
 
+// 3. Se ha llamado a la función con un contexto ('explicit-binding')?
+//    también conocido como un 'owning' o 'containing object'? Si es que sí , entonces el 'this' es
+//    ese objeto de contexto.
 
+var bar = obj1.foo();
 
+// 4 De otra forma, por defecto el 'this' (default-binding) .
+// Si está en modo estricto 'this' es undefined.
+// En caso contrario, 'this' es el global-object.
+
+var bar = foo();
+
+/**
+ * Y así es , Eso es todo lo que hace falta para entender las reglas del 'this-binding' para
+ * las llamadas a función normales. bueno... casi ya que hay algunas excepciones.
+ */
