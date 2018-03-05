@@ -103,19 +103,19 @@
  */
 
 
-function foo(algo) {
-    this.a = algo;
-}
-
-var obj1 = {};
-
-var bar = foo.bind(obj1);
-bar(2);
-console.log('obj1.a', obj1.a);//2
-
-var baz = new bar(3);
-console.log('obj1.a', obj1.a);//2
-console.log('baz.a', baz.a);//3
+// function foo(algo) {
+//     this.a = algo;
+// }
+//
+// var obj1 = {};
+//
+// var bar = foo.bind(obj1);
+// bar(2);
+// console.log('obj1.a', obj1.a);//2
+//
+// var baz = new bar(3);
+// console.log('obj1.a', obj1.a);//2
+// console.log('baz.a', baz.a);//3
 
 
 /**
@@ -127,11 +127,11 @@ console.log('baz.a', baz.a);//3
  * Deberías de estar sorprendido si miras nuevamente al anterior 'fake bind helper'
  */
 
-function bind(fn, obj) {
-    return function () {
-        fn.apply(obj);
-    }
-}
+// function bind(fn, obj) {
+//     return function () {
+//         fn.apply(obj);
+//     }
+// }
 
 
 /**
@@ -184,5 +184,32 @@ if (!Function.prototype.bind) {
  * fNop.prototype = this.prototype;
  * fBound.prototype = new fNOP();
  *
+ * No nos vamos a meter en profundidad a explicar como funciona esta ñapa
+ * (Es complicado y va mucho más allá de lo que aquí se pretende explicar) (Gracias kyle)
+ * Pero esencialmente la utilidad lo que hace es averiguar cuando sí y cuando no la función 'hard-boundeada' ha
+ * sido llamada con el 'new'(Dando como resultado un nuevo objeto construido siendo su this)
+ * Cuando es este caso , que sí lo está (hard-boundeada) , entonces usa ese nuevo 'this' que se ha creado en vez
+ * de usar el que anteriormente se había especificado para el 'hard-binding' en el 'this'.
+ *
+ * Por qué va a resultar útil ser capaces de sobreescribir un 'hard-binding' ?
+ *
+ * La principal razón que nos lleva a usar esto , es crear una función
+ * (que puede ser usada para construir nuevos objetos) que esencialmente ingnore el 'hard-binding'
+ * y en puesto de ello  'presetea' algunos o todos los argumentos de la función. Una de las capacidades
+ * de bind(..) es que cualquier argumento que le pases después del primero que es el objeto que se bindea
+ * al 'this' , son por defecto, pasados a la función subyacente como argumentos.
+ * (técnicamente se llama 'partial application' la cual es un subconjunto de 'currying' (zurra?))
+ * Por ejemplo:
  */
+function zoo(p1, p2) {
+    this.val = p1 + p2;
+}
+//Usamos el null aquí porque nos la pela el hard-binding del 'this'
+//en este ejemplo. y de todas formas va a ser sobreescrita por el binding
+//de la llamada con el 'new'
+var bar = zoo.bind(null, "p1");
+
+var baz = new bar("p2");
+
+console.log('baz.val', baz.val);//p1p2 (la cagaste bien si esto pasa).
 
