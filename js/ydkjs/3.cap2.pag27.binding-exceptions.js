@@ -34,4 +34,12 @@
  * esos valores son , efectivamente ignorados y por supuesto el 'default-binding' se aplica a la invocación.
  */
 
+function foo() {
+   console.log('this.a', this.a);//TODO: borrame.
+}
+
+var a = 2;
+
+foo.call(null);
+
 
