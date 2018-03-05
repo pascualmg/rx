@@ -127,9 +127,62 @@ console.log('baz.a', baz.a);//3
  * Deberías de estar sorprendido si miras nuevamente al anterior 'fake bind helper'
  */
 
-function bind(fn,obj) {
+function bind(fn, obj) {
     return function () {
-       fn.apply(obj);
+        fn.apply(obj);
     }
 }
+
+
+/**
+ * Poniendonos a razonar como funciona el código del helper, nos damos cuenta que no habría manera alguna
+ * de sobreescribir el 'hard-binding' al objeto con el operador 'new'.
+ *
+ * Pero claro , la prefabricada que viene en ES5 Function.prototype.bind(..) es algo más sofisticada,
+ * aunque no mucho tampoco.
+ *
+ * Aquí el polyfill que hay en la página MDN para bind(...):
+ */
+
+if (!Function.prototype.bind) {
+    Function.prototype.bind = function (oThis) {
+        if (typeof this !== "function") {
+            throw new TypeError('Function.protype.bind() no es callable');
+        }
+        var aArgs = Array.prototype.slice.call(arguments, 1);
+        var fToBind = this;
+        var fNOP = function () {
+        };
+        //la helper..
+        var fBound = function () {
+            return fToBind.apply(
+                this instanceof fNOP && oThis ? this : oThis,
+                aArgs.concat(Array.prototype.slice.call(arguments))
+            )
+        };
+
+        fNOP.prototype = this.prototype;
+        fBound.prototype = new fNOP();
+
+        return fBound;
+    };
+}
+/**pista:
+ * El polifyll bind(..) mostrado anteriormente difiere del bind
+ * prefabricado de ES5 con respecto a las funciones de 'hard-bound' que se usan con el 'new'
+ * (sigue leyendo para saber para que sirve)
+ * Es por que el por que el polyfill no puede crear una función sin un '.prototype' de la misma
+ * forma que lo hace la prefabricada.Hay algunas 'indirecciones matizadas' (literal) que hacen que
+ * tenga el mismo comportamiento.
+ * TEN CUIDADO si piensas usar el 'new' con una función 'hard-boundeada' y echas mano de este polifyll.
+ */
+
+/**
+ * La parte que permite que se pueda sobreescribir con el new es esta:
+ * this instanceof fNOP && oThis ? this : oThis,
+ * y...
+ * fNop.prototype = this.prototype;
+ * fBound.prototype = new fNOP();
+ *
+ */
 
