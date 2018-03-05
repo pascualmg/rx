@@ -16,4 +16,22 @@
  *
  */
 
+/**
+ * BINDING EXCEPTIONS.
+ * ---------------------
+ *
+ * Como suele pasar hay excepciones en las "reglas".
+ *
+ * El comportamiento del 'this-binding' puede ser en algunos escenarios sorprendente, hablamos
+ * de cuando intentas hacer un 'binding' diferente y al final la cosa termina con un comportamiento
+ * del 'binding' de la regla del default.
+ *
+ *
+ * ignored this
+ * ------------
+ *
+ * Si le pasas a la call o a la apply como parametro para bindear al 'this' , un undefined o un null
+ * esos valores son , efectivamente ignorados y por supuesto el 'default-binding' se aplica a la invocación.
+ */
+
 
