@@ -62,25 +62,25 @@
  * Sólo nos queda descifrar ahora , donde encajaría la precedencia del 'new binding':
  */
 
-function foo(algo) {
-   this.a = algo;
-}
-
-var obj1 = {
-    foo: foo
-};
-
-var obj2 = {};
-
-obj1.foo(2);
-console.log('obj1.a', obj1.a);//2
-
-obj1.foo.call(obj2, 3);
-console.log('obj2.a', obj2.a);//3
-
-var bar = new obj1.foo(4);
-console.log('obj1.a', obj1.a);//2
-console.log('bar.a', bar.a);//4
+// function foo(algo) {
+//    this.a = algo;
+// }
+//
+// var obj1 = {
+//     foo: foo
+// };
+//
+// var obj2 = {};
+//
+// obj1.foo(2);
+// console.log('obj1.a', obj1.a);//2
+//
+// obj1.foo.call(obj2, 3);
+// console.log('obj2.a', obj2.a);//3
+//
+// var bar = new obj1.foo(4);
+// console.log('obj1.a', obj1.a);//2
+// console.log('bar.a', bar.a);//4
 
 /**
  * OK, el 'new binding' tiene mayor precedencia que el 'implicit binding', pero tu que piensas
@@ -103,6 +103,33 @@ console.log('bar.a', bar.a);//4
  */
 
 
+function foo(algo) {
+    this.a = algo;
+}
+
+var obj1 = {};
+
+var bar = foo.bind(obj1);
+bar(2);
+console.log('obj1.a', obj1.a);//2
+
+var baz = new bar(3);
+console.log('obj1.a', obj1.a);//2
+console.log('baz.a', baz.a);//3
 
 
+/**
+ * Wooo! bar se ha 'hard-bindeado' contra el 'obj1' pero 'new bar(3)' no ha cambiado obj1.a a 3
+ * como nosotros esperábamos. En puesto de eso , en la llamada que le hace el 'hard-binding' (con el obj1)
+ * a bar(...) ES capaz de sobreescribirlo con el 'new'. Por que como se aplique un 'new' ya tenemos otra vez
+ * un objeto totalmente nuevo que se ha creado , al cual hemos llamado baz, y vemos que de hecho baz.a vale 3.
+ *
+ * Deberías de estar sorprendido si miras nuevamente al anterior 'fake bind helper'
+ */
+
+function bind(fn,obj) {
+    return function () {
+       fn.apply(obj);
+    }
+}
 
