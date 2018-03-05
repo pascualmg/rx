@@ -23,7 +23,7 @@
  *  Así, ahora hemos dejado al descubierto  las 4 reglas para el 'bindeo del this' en función de
  *  quien hace la llamadas.
  *
- *  Sólo necesitas es encontrar el call-site e inspeccionarlo para ver qué regla se aplica.
+ *  Sólo necesitas localizar el call-site e inspeccionarlo para ver qué regla se aplica.
  *  Pero qué pasa si el call-site tiene diferentes reglas de elección?
  *  Tiene que existir un orden de precedencia entre esas reglas. Así que lo siguiente deja ver
  *  como se aplica la prededencia de dichas reglas.
